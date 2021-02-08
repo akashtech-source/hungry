@@ -1,0 +1,38 @@
+img{
+    max-width: 100%; 
+ }
+.form-control{
+    background-color: rgb(29 21 21);
+    padding: 22px;
+    border: none;
+    border-radius: 25px;
+}
+#food-list{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.btn{
+    border-radius: 1.5rem;
+    padding: 9px 20px;
+}
+
+.btn-privious{
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+.search-box{
+    position: relative;
+}
+.search-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+}
+
+.single-result{
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+}
+
+
