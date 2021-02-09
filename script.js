@@ -1,51 +1,56 @@
-const getFood = meals =>{
-    const foodMainDiv = document.getElementById('food-list');
-    foodMainDiv.innerHTML ='';
-    meals.forEach(food=>{
-        const foodDiv = document.createElement('div');
-        foodDiv.className = 'single-result row justify-content-center m-2 p-3 margin-padding';
-        foodDiv.innerHTML = `
-        <div class = "meal" onclick ="all('${food.idMeal}')">
-            <img src = "${food.strMealThumb}" alt = "food">
-            <h3 class = "mt-3">${food.strMeal}</h3>
-            </div>
-        </div>`;
-        foodMainDiv.appendChild(foodDiv);
-    });
-};
-
-const all =(foodId) =>{
-    const url = `https:www.themealdb.com/api/json/v1/1/lookup.php?i=${foodId}`;
-    fetch(url)
-    .then(res =>res.json())
-    .then(data =>{
-        allFoodDetails(data.meals);
-    })
-}
-function searchFood(){
-    const searchValue = document.getElementById('input-field').value;
-    const url = `https:www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`;
+function foodSearch(){
+    const inputFoodName = document.getElementById('search-field').value;
+    const url = `https:www.themealdb.com/api/json/v1/1/search.php?s=${inputFoodName}`;
     fetch(url)
     .then(res => res.json())
     .then(data => {
-    
-        getFood(data.meals);
+        getFoodResult(data.meals);
     })
 }
 
 
-function allFoodDetails(collection){
-    const foodDetails = document.getElementById('food-details');
-    foodDetails.innerHTML ='';
-    collection.forEach(detail=>{
-       const insideDiv = document.createElement('div');
-       insideDiv.className = 'col-md-8 mx-auto';
-       insideDiv.innerHTML = `
-       <img src="${detail.strMealThumb}">
-       <h3>${detail.strMeal}</h3>
-       
-      
+const getFoodResult = foods =>{
+    const foodMainSection = document.getElementById('food-list');
+    foodMainSection.innerHTML ='';
+    foods.forEach(food=>{
+        const foodInnerSection = document.createElement('div');
+        foodInnerSection.className = 'row justify-content-center m-2 p-3';
+        foodInnerSection.innerHTML = `
+        <div class = "food" onclick ="foodDetails('${food.idMeal}')">
+            <img src = "${food.strMealThumb}" alt = "food" class = "img-fluid">
+            <h3 class = "mt-3">${food.strMeal}</h3>
+            </div>
+        </div>`;
+        foodMainSection.appendChild(foodInnerSection);
+    });
+};
+
+const foodDetails =(foodName) =>{
+    const url = `https:www.themealdb.com/api/json/v1/1/lookup.php?i=${foodName}`;
+    fetch(url)
+    .then(res =>res.json())
+    .then(data =>{
+        foodDetailsSection(data.meals);
+    })
+}
+
+
+function foodDetailsSection(foodNameCatch){
+    const allDetails = document.getElementById('food-details');
+    allDetails.innerHTML ='';
+    foodNameCatch.forEach(detailInside=>{
+       const detailsInnerSection = document.createElement('div');
+       detailsInnerSection.className = 'col-md-6 mx-auto';
+       detailsInnerSection.innerHTML = `
+       <img src="${detailInside.strMealThumb}" class= "img-fluid">
+       <h3 class = " mt-3">${detailInside.strMeal}</h3>
+       <ol>
+       <li>${detailInside.strIngredient1}</li>
+       <li>${detailInside.strIngredient2}</li>
+       <li>${detailInside.strIngredient3}</li>
+       </ol>
+    
        `;
-       foodDetails.appendChild(insideDiv);
+       allDetails.appendChild(detailsInnerSection);
     })
 }
